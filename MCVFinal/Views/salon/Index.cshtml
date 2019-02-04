@@ -1,0 +1,40 @@
+﻿@model IEnumerable<MCVFinal.salon>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Salones</h2>
+
+<p>
+    @Html.ActionLink("Crear nuevo salon", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            Nombre del salon
+        </th>
+        <th>
+            Capacidad
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.nombre)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.capacidad)
+        </td>
+        <td>
+            @Html.ActionLink("Editar", "Edit", new { id=item.id_salon }) |
+            @Html.ActionLink("Detalles", "Details", new { id=item.id_salon }) |
+            @Html.ActionLink("Eliminar", "Delete", new { id=item.id_salon })
+        </td>
+    </tr>
+}
+
+</table>
+@Html.ActionLink("Retornar", null, null, null, new { href = Request.UrlReferrer })

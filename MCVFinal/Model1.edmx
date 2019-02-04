@@ -1,0 +1,265 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="mydbModel.Store" Provider="MySql.Data.MySqlClient" ProviderManifestToken="5.7" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="evento">
+          <Key>
+            <PropertyRef Name="id_evento" />
+          </Key>
+          <Property Name="id_evento" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nombre" Type="varchar" MaxLength="45" />
+          <Property Name="organizador" Type="varchar" MaxLength="45" />
+          <Property Name="salon_id_salon" Type="int" />
+        </EntityType>
+        <EntityType Name="listado">
+          <Key>
+            <PropertyRef Name="id_listado" />
+          </Key>
+          <Property Name="id_listado" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nombre" Type="varchar" MaxLength="45" />
+          <Property Name="apellido" Type="varchar" MaxLength="45" />
+          <Property Name="evento_id_evento" Type="int" />
+          <Property Name="ubicacion_id_mesa" Type="int" />
+          <Property Name="presente" Type="varchar" MaxLength="45" />
+        </EntityType>
+        <EntityType Name="salon">
+          <Key>
+            <PropertyRef Name="id_salon" />
+          </Key>
+          <Property Name="id_salon" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nombre" Type="varchar" MaxLength="45" />
+          <Property Name="capacidad" Type="varchar" MaxLength="45" />
+        </EntityType>
+        <EntityType Name="ubicacion">
+          <Key>
+            <PropertyRef Name="id_mesa" />
+          </Key>
+          <Property Name="id_mesa" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="descripcion" Type="varchar" MaxLength="45" />
+        </EntityType>
+        <Association Name="fk_evento_salon">
+          <End Role="salon" Type="Self.salon" Multiplicity="0..1" />
+          <End Role="evento" Type="Self.evento" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="salon">
+              <PropertyRef Name="id_salon" />
+            </Principal>
+            <Dependent Role="evento">
+              <PropertyRef Name="salon_id_salon" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_listado_evento1">
+          <End Role="evento" Type="Self.evento" Multiplicity="0..1" />
+          <End Role="listado" Type="Self.listado" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="evento">
+              <PropertyRef Name="id_evento" />
+            </Principal>
+            <Dependent Role="listado">
+              <PropertyRef Name="evento_id_evento" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_listado_ubicacion1">
+          <End Role="ubicacion" Type="Self.ubicacion" Multiplicity="0..1" />
+          <End Role="listado" Type="Self.listado" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ubicacion">
+              <PropertyRef Name="id_mesa" />
+            </Principal>
+            <Dependent Role="listado">
+              <PropertyRef Name="ubicacion_id_mesa" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="mydbModelStoreContainer">
+          <EntitySet Name="evento" EntityType="Self.evento" Schema="mydb" store:Type="Tables" />
+          <EntitySet Name="listado" EntityType="Self.listado" Schema="mydb" store:Type="Tables" />
+          <EntitySet Name="salon" EntityType="Self.salon" Schema="mydb" store:Type="Tables" />
+          <EntitySet Name="ubicacion" EntityType="Self.ubicacion" Schema="mydb" store:Type="Tables" />
+          <AssociationSet Name="fk_evento_salon" Association="Self.fk_evento_salon">
+            <End Role="salon" EntitySet="salon" />
+            <End Role="evento" EntitySet="evento" />
+          </AssociationSet>
+          <AssociationSet Name="fk_listado_evento1" Association="Self.fk_listado_evento1">
+            <End Role="evento" EntitySet="evento" />
+            <End Role="listado" EntitySet="listado" />
+          </AssociationSet>
+          <AssociationSet Name="fk_listado_ubicacion1" Association="Self.fk_listado_ubicacion1">
+            <End Role="ubicacion" EntitySet="ubicacion" />
+            <End Role="listado" EntitySet="listado" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="mydbModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="evento">
+          <Key>
+            <PropertyRef Name="id_evento" />
+          </Key>
+          <Property Name="id_evento" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombre" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="organizador" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="salon_id_salon" Type="Int32" />
+          <NavigationProperty Name="salon" Relationship="Self.fk_evento_salon" FromRole="evento" ToRole="salon" />
+          <NavigationProperty Name="listadoes" Relationship="Self.fk_listado_evento1" FromRole="evento" ToRole="listado" />
+        </EntityType>
+        <EntityType Name="listado">
+          <Key>
+            <PropertyRef Name="id_listado" />
+          </Key>
+          <Property Name="id_listado" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombre" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="apellido" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="evento_id_evento" Type="Int32" />
+          <Property Name="ubicacion_id_mesa" Type="Int32" />
+          <Property Name="presente" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="evento" Relationship="Self.fk_listado_evento1" FromRole="listado" ToRole="evento" />
+          <NavigationProperty Name="ubicacion" Relationship="Self.fk_listado_ubicacion1" FromRole="listado" ToRole="ubicacion" />
+        </EntityType>
+        <EntityType Name="salon">
+          <Key>
+            <PropertyRef Name="id_salon" />
+          </Key>
+          <Property Name="id_salon" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombre" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="capacidad" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="eventoes" Relationship="Self.fk_evento_salon" FromRole="salon" ToRole="evento" />
+        </EntityType>
+        <EntityType Name="ubicacion">
+          <Key>
+            <PropertyRef Name="id_mesa" />
+          </Key>
+          <Property Name="id_mesa" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="descripcion" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="listadoes" Relationship="Self.fk_listado_ubicacion1" FromRole="ubicacion" ToRole="listado" />
+        </EntityType>
+        <Association Name="fk_evento_salon">
+          <End Role="salon" Type="Self.salon" Multiplicity="0..1" />
+          <End Role="evento" Type="Self.evento" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="salon">
+              <PropertyRef Name="id_salon" />
+            </Principal>
+            <Dependent Role="evento">
+              <PropertyRef Name="salon_id_salon" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_listado_evento1">
+          <End Role="evento" Type="Self.evento" Multiplicity="0..1" />
+          <End Role="listado" Type="Self.listado" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="evento">
+              <PropertyRef Name="id_evento" />
+            </Principal>
+            <Dependent Role="listado">
+              <PropertyRef Name="evento_id_evento" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_listado_ubicacion1">
+          <End Role="ubicacion" Type="Self.ubicacion" Multiplicity="0..1" />
+          <End Role="listado" Type="Self.listado" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ubicacion">
+              <PropertyRef Name="id_mesa" />
+            </Principal>
+            <Dependent Role="listado">
+              <PropertyRef Name="ubicacion_id_mesa" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="mydbEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="eventoes" EntityType="Self.evento" />
+          <EntitySet Name="listadoes" EntityType="Self.listado" />
+          <EntitySet Name="salons" EntityType="Self.salon" />
+          <EntitySet Name="ubicacions" EntityType="Self.ubicacion" />
+          <AssociationSet Name="fk_evento_salon" Association="Self.fk_evento_salon">
+            <End Role="salon" EntitySet="salons" />
+            <End Role="evento" EntitySet="eventoes" />
+          </AssociationSet>
+          <AssociationSet Name="fk_listado_evento1" Association="Self.fk_listado_evento1">
+            <End Role="evento" EntitySet="eventoes" />
+            <End Role="listado" EntitySet="listadoes" />
+          </AssociationSet>
+          <AssociationSet Name="fk_listado_ubicacion1" Association="Self.fk_listado_ubicacion1">
+            <End Role="ubicacion" EntitySet="ubicacions" />
+            <End Role="listado" EntitySet="listadoes" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="mydbModelStoreContainer" CdmEntityContainer="mydbEntities">
+          <EntitySetMapping Name="eventoes">
+            <EntityTypeMapping TypeName="mydbModel.evento">
+              <MappingFragment StoreEntitySet="evento">
+                <ScalarProperty Name="id_evento" ColumnName="id_evento" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="organizador" ColumnName="organizador" />
+                <ScalarProperty Name="salon_id_salon" ColumnName="salon_id_salon" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="listadoes">
+            <EntityTypeMapping TypeName="mydbModel.listado">
+              <MappingFragment StoreEntitySet="listado">
+                <ScalarProperty Name="id_listado" ColumnName="id_listado" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="apellido" ColumnName="apellido" />
+                <ScalarProperty Name="evento_id_evento" ColumnName="evento_id_evento" />
+                <ScalarProperty Name="ubicacion_id_mesa" ColumnName="ubicacion_id_mesa" />
+                <ScalarProperty Name="presente" ColumnName="presente" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="salons">
+            <EntityTypeMapping TypeName="mydbModel.salon">
+              <MappingFragment StoreEntitySet="salon">
+                <ScalarProperty Name="id_salon" ColumnName="id_salon" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="capacidad" ColumnName="capacidad" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ubicacions">
+            <EntityTypeMapping TypeName="mydbModel.ubicacion">
+              <MappingFragment StoreEntitySet="ubicacion">
+                <ScalarProperty Name="id_mesa" ColumnName="id_mesa" />
+                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

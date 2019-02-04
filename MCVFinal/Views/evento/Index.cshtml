@@ -1,0 +1,47 @@
+﻿@model IEnumerable<MCVFinal.evento>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Lista de eventos</h2>
+
+<p>
+    @Html.ActionLink("Crear nuevo evento", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+           Nombre Evento
+        </th>
+        <th>
+            Organizador
+        </th>
+        <th>
+            Nombre Salon
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.nombre)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.organizador)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.salon.nombre)
+        </td>
+        <td>
+            @Html.ActionLink("Ver invitados", "VerInvitados", new { id = item.id_evento }) |
+            @Html.ActionLink("Editar", "Edit", new { id=item.id_evento }) |
+            @Html.ActionLink("Detalles", "Details", new { id=item.id_evento }) |
+            @Html.ActionLink("Eliminar", "Delete", new { id=item.id_evento })
+        </td>
+    </tr>
+}
+
+</table>
+@Html.ActionLink("Retornar", null, null, null, new { href = Request.UrlReferrer })

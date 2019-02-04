@@ -1,0 +1,42 @@
+﻿@model MCVFinal.evento
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Detalles del evento</h2>
+
+<div>
+    
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+           Nombre
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.nombre)
+        </dd>
+
+        <dt>
+            Organizador
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.organizador)
+        </dd>
+
+        <dt>
+            Nombre del salon
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.salon.nombre)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Editar", "Edit", new { id = Model.id_evento }) |
+    @Html.ActionLink("Retornar", null, null, null, new { href = Request.UrlReferrer })
+</p>

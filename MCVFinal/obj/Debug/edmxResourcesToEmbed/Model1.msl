@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="mydbModelStoreContainer" CdmEntityContainer="mydbEntities">
+    <EntitySetMapping Name="eventoes">
+      <EntityTypeMapping TypeName="mydbModel.evento">
+        <MappingFragment StoreEntitySet="evento">
+          <ScalarProperty Name="id_evento" ColumnName="id_evento" />
+          <ScalarProperty Name="nombre" ColumnName="nombre" />
+          <ScalarProperty Name="organizador" ColumnName="organizador" />
+          <ScalarProperty Name="salon_id_salon" ColumnName="salon_id_salon" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="listadoes">
+      <EntityTypeMapping TypeName="mydbModel.listado">
+        <MappingFragment StoreEntitySet="listado">
+          <ScalarProperty Name="id_listado" ColumnName="id_listado" />
+          <ScalarProperty Name="nombre" ColumnName="nombre" />
+          <ScalarProperty Name="apellido" ColumnName="apellido" />
+          <ScalarProperty Name="evento_id_evento" ColumnName="evento_id_evento" />
+          <ScalarProperty Name="ubicacion_id_mesa" ColumnName="ubicacion_id_mesa" />
+          <ScalarProperty Name="presente" ColumnName="presente" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="salons">
+      <EntityTypeMapping TypeName="mydbModel.salon">
+        <MappingFragment StoreEntitySet="salon">
+          <ScalarProperty Name="id_salon" ColumnName="id_salon" />
+          <ScalarProperty Name="nombre" ColumnName="nombre" />
+          <ScalarProperty Name="capacidad" ColumnName="capacidad" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ubicacions">
+      <EntityTypeMapping TypeName="mydbModel.ubicacion">
+        <MappingFragment StoreEntitySet="ubicacion">
+          <ScalarProperty Name="id_mesa" ColumnName="id_mesa" />
+          <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

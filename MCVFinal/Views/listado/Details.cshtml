@@ -1,0 +1,58 @@
+﻿@model MCVFinal.listado
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Detalles</h2>
+
+<div>
+    
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            Nombre
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.nombre)
+        </dd>
+
+        <dt>
+           Apellido
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.apellido)
+        </dd>
+
+        <dt>
+           Presente
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.presente)
+        </dd>
+
+        <dt>
+            Nombre del Evento
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.evento.nombre)
+        </dd>
+
+        <dt>
+            Ubicacion del invitado
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ubicacion.descripcion)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Editar", "Edit", new { id = Model.id_listado }) |
+    @Html.ActionLink("Regresar", null, null, null, new { href = Request.UrlReferrer })
+</p>

@@ -1,0 +1,98 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="mydbModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="evento">
+    <Key>
+      <PropertyRef Name="id_evento" />
+    </Key>
+    <Property Name="id_evento" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="nombre" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+    <Property Name="organizador" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+    <Property Name="salon_id_salon" Type="Int32" />
+    <NavigationProperty Name="salon" Relationship="Self.fk_evento_salon" FromRole="evento" ToRole="salon" />
+    <NavigationProperty Name="listadoes" Relationship="Self.fk_listado_evento1" FromRole="evento" ToRole="listado" />
+  </EntityType>
+  <EntityType Name="listado">
+    <Key>
+      <PropertyRef Name="id_listado" />
+    </Key>
+    <Property Name="id_listado" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="nombre" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+    <Property Name="apellido" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+    <Property Name="evento_id_evento" Type="Int32" />
+    <Property Name="ubicacion_id_mesa" Type="Int32" />
+    <Property Name="presente" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="evento" Relationship="Self.fk_listado_evento1" FromRole="listado" ToRole="evento" />
+    <NavigationProperty Name="ubicacion" Relationship="Self.fk_listado_ubicacion1" FromRole="listado" ToRole="ubicacion" />
+  </EntityType>
+  <EntityType Name="salon">
+    <Key>
+      <PropertyRef Name="id_salon" />
+    </Key>
+    <Property Name="id_salon" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="nombre" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+    <Property Name="capacidad" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="eventoes" Relationship="Self.fk_evento_salon" FromRole="salon" ToRole="evento" />
+  </EntityType>
+  <EntityType Name="ubicacion">
+    <Key>
+      <PropertyRef Name="id_mesa" />
+    </Key>
+    <Property Name="id_mesa" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="descripcion" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="listadoes" Relationship="Self.fk_listado_ubicacion1" FromRole="ubicacion" ToRole="listado" />
+  </EntityType>
+  <Association Name="fk_evento_salon">
+    <End Role="salon" Type="Self.salon" Multiplicity="0..1" />
+    <End Role="evento" Type="Self.evento" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="salon">
+        <PropertyRef Name="id_salon" />
+      </Principal>
+      <Dependent Role="evento">
+        <PropertyRef Name="salon_id_salon" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_listado_evento1">
+    <End Role="evento" Type="Self.evento" Multiplicity="0..1" />
+    <End Role="listado" Type="Self.listado" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="evento">
+        <PropertyRef Name="id_evento" />
+      </Principal>
+      <Dependent Role="listado">
+        <PropertyRef Name="evento_id_evento" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_listado_ubicacion1">
+    <End Role="ubicacion" Type="Self.ubicacion" Multiplicity="0..1" />
+    <End Role="listado" Type="Self.listado" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ubicacion">
+        <PropertyRef Name="id_mesa" />
+      </Principal>
+      <Dependent Role="listado">
+        <PropertyRef Name="ubicacion_id_mesa" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="mydbEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="eventoes" EntityType="Self.evento" />
+    <EntitySet Name="listadoes" EntityType="Self.listado" />
+    <EntitySet Name="salons" EntityType="Self.salon" />
+    <EntitySet Name="ubicacions" EntityType="Self.ubicacion" />
+    <AssociationSet Name="fk_evento_salon" Association="Self.fk_evento_salon">
+      <End Role="salon" EntitySet="salons" />
+      <End Role="evento" EntitySet="eventoes" />
+    </AssociationSet>
+    <AssociationSet Name="fk_listado_evento1" Association="Self.fk_listado_evento1">
+      <End Role="evento" EntitySet="eventoes" />
+      <End Role="listado" EntitySet="listadoes" />
+    </AssociationSet>
+    <AssociationSet Name="fk_listado_ubicacion1" Association="Self.fk_listado_ubicacion1">
+      <End Role="ubicacion" EntitySet="ubicacions" />
+      <End Role="listado" EntitySet="listadoes" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

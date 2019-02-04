@@ -1,0 +1,76 @@
+﻿@model IEnumerable<MCVFinal.listado>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Listado de invitados</h2>
+<p>
+    @Html.ActionLink("Crear nuevo invitado", "Create")
+</p>
+
+@using (Html.BeginForm())
+{
+    <div class="form-group">
+
+        <input type="text" id="txtfilter" name="filtroApellido" placeholder="Apellido" />
+        <input type="text" id="txtfilter" name="filtroNombre" placeholder="Nombre" />
+        <input type="text" id="txtfilter" name="filtroUbicacion" placeholder="Ubicacion" />
+        <input type="submit" value="Buscar" class="btn btn-default" />
+    </div>
+}
+
+
+<table class="table">
+    <tr>
+        <th>
+            Apellido
+        </th>
+        <th>
+           Nombre
+        </th>
+        <th>
+            Ubicacion
+        </th>
+        <th>
+            Presente
+        </th>
+        <th>
+            Nombre del Evento
+        </th>
+        
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.apellido)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.nombre)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ubicacion.descripcion)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.presente)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.evento.nombre)
+        </td>
+        
+        <td>
+            
+            @Html.ActionLink("Presente", "Presente", new { id = item.id_listado, id2 = item.evento_id_evento }) |
+            @Html.ActionLink("Editar", "Edit", new { id=item.id_listado }) |
+            @Html.ActionLink("Detalles", "Details", new { id=item.id_listado }) |
+            @Html.ActionLink("Eliminar", "Delete", new { id=item.id_listado, id2= item.evento_id_evento})
+        </td>
+    </tr>
+}
+
+</table>
+
+    @Html.ActionLink("Retornar", null, null, null, new { href = Request.UrlReferrer })
+

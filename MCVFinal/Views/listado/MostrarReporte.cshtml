@@ -1,0 +1,107 @@
+﻿@model MCVFinal.Reporte
+
+<div>
+    <h3>Reporte de presencia</h3>
+
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Presentes)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Presentes)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Ausentes)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Ausentes)
+        </dd>
+
+    </dl>
+    <h4>Listado Ausentes</h4>
+    <br />
+    <table id="tblData" class="table">
+
+        <tr>
+            <th>
+                Apellido
+            </th>
+            <th>
+                Nombre
+            </th>
+            <th>
+                Presente
+            </th>
+            <th>
+
+            </th>
+        </tr>
+
+
+        @foreach (var item in Model.ListaAusentes)
+            {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.apellido)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.nombre)
+                </td>
+               
+                <td>
+                    @Html.DisplayFor(modelItem => item.presente)
+                </td>
+
+
+            </tr>
+        }
+
+    </table>
+    <h4>Listado Presentes</h4>
+    <br />
+    <table id="tblData" class="table">
+
+        <tr>
+            <th>
+                Apellido
+            </th>
+            <th>
+                Nombre
+            </th>
+             <th>
+                Presente
+            </th>
+            <th>
+
+            </th>
+        </tr>
+
+
+        @foreach (var item in Model.ListaPresentes)
+            {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.apellido)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.nombre)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.presente)
+                </td>
+            </tr>
+        }
+
+    </table>
+
+
+
+
+</div>
+<p>
+
+    @Html.ActionLink("Regresar", null, null, null, new { href = Request.UrlReferrer })
+</p>

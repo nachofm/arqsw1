@@ -1,0 +1,26 @@
+﻿@model MCVFinal.ubicacion
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Detalles de la ubicacion</h2>
+
+<div>
+    <h4>ubicacion</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            Descripcion de la ubicacion
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.descripcion)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Editar", "Edit", new { id = Model.id_mesa }) |
+    @Html.ActionLink("Retornar", null, null, null, new { href = Request.UrlReferrer })
+</p>
